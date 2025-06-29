@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart - PetzBasket</title>
+  <link rel="stylesheet" href="cssstyle.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+  
+  <!-- logo -->
+<div class="logo">
+  <img src="images/logo.jpg" alt="PetzBasket Logo">
+  <span>PetzBasket</span>
+</div>  
+  
+    <div class="logo">PetzBasket</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="cart.html">🛒Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="cart-section">
+    <h2>Your Shopping Cart</h2>
+    <div class="cart-items" id="cart-items"></div>
+
+
+      <!-- Add more cart-item divs for other items -->
+    </div>
+
+    <div class="cart-summary">
+      <p><strong>Total:</strong> ₹399</p>
+      <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+  </section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="login.html">Login</a>
+      <a href="#">Terms of Service</a>
+    </div>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+    </div>
+    <p>&copy; 2025 PetzBasket. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script src="jsscript.js"></script>
+  
+<script>
+  function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart(); // Re-render
+  }
+
+  function displayCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartContainer = document.getElementById("cart-items");
+    const cartSummary = document.querySelector(".cart-summary");
+    cartContainer.innerHTML = "";
+
+    let total = 0;
+
+    if (cart.length === 0) {
+      cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+      cartSummary.innerHTML = "";
+      return;
+    }
+
+    cart.forEach((item, index) => {
+      total += item.price * item.quantity;
+      cartContainer.innerHTML += `
+        <div class="cart-item">
+          <img src="images/${item.image}" alt="${item.name}">
+          <div class="item-details">
+            <h3>${item.name}</h3>
+            <p>Price: ₹${item.price}</p>
+            <p>Size: ${item.size}</p>
+            <label>Quantity:</label>
+            <input type="number" value="${item.quantity}" min="1" class="qty-input" onchange="updateQty(${index}, this.value)">
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
+        </div>
+      `;
+    });
+
+    cartSummary.innerHTML = `
+      <p><strong>Total:</strong> ₹${total}</p>
+      <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+    `;
+  }
+
+  function updateQty(index, newQty) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart[index].quantity = parseInt(newQty);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+  }
+
+  displayCart(); // Initial render
+</script>
+  
+  
+</body>
+</html>

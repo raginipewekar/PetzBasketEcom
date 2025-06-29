@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout - PetzBasket</title>
+  <link rel="stylesheet" href="cssstyle.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="images/logo.jpg" alt="PetzBasket Logo">
+      <span>PetzBasket</span>
+    </div>  
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="cart.html">🛒Cart</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Checkout Section -->
+  <section class="checkout-section">
+    <h2>Checkout</h2>
+
+    <!-- Shipping Details Form -->
+    <form class="checkout-form" id="checkout-form">
+      <h3>Shipping Details</h3>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="address">Address:</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" required>
+
+      <label for="pin">Pincode:</label>
+      <input type="text" id="pin" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" required>
+
+      <!-- Payment Method -->
+      <h3>Payment Method</h3>
+      <label><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+      <label><input type="radio" name="payment" value="UPI"> UPI / Wallet</label>
+      <label><input type="radio" name="payment" value="Card"> Credit/Debit Card</label>
+
+      <!-- Order Summary -->
+      <h3>Order Summary</h3>
+      <div class="order-summary" id="order-summary">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Confirm Button -->
+      <button type="submit" class="confirm-btn">Place Order</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="categories.html">Categories</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">Login</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+      </div>
+      <p>&copy; 2025 PetzBasket. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Render order summary from localStorage cart
+    function loadOrderSummary() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const summaryContainer = document.getElementById("order-summary");
+      summaryContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        summaryContainer.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.quantity;
+        summaryContainer.innerHTML += `
+          <p>${item.quantity} x ${item.name} - ₹${item.price * item.quantity}</p>
+        `;
+      });
+
+      summaryContainer.innerHTML += `<p><strong>Total: ₹${total}</strong></p>`;
+    }
+
+    loadOrderSummary();
+
+    // Handle order placement
+    document.getElementById("checkout-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // You can validate here if needed
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const city = document.getElementById("city").value;
+      const pin = document.getElementById("pin").value;
+      const phone = document.getElementById("phone").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+
+      // You could send this to server (in real site)
+
+      // Show success and clear cart
+      alert(`Order placed successfully!\nThank you, ${name}!\nPayment: ${payment}`);
+
+      // Clear cart
+      localStorage.removeItem("cart");
+
+      // Optional: redirect to homepage
+      window.location.href = "index.html";
+    });
+  </script>
+
+</body>
+</html>

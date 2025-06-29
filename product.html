@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product - PetzBasket</title>
+  <link rel="stylesheet" href="cssstyle.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="images/logo.jpg" alt="PetzBasket Logo">
+      <span>PetzBasket</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="categories.html">Categories</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="cart.html">🛒Cart</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Product Details Section -->
+  <section class="product-details">
+    <div class="product-image">
+      <img id="product-image" src="" alt="Product Image">
+    </div>
+    <div class="product-info">
+      <h2 id="product-name"></h2>
+      <p class="price" id="product-price"></p>
+      <p id="product-desc"></p>
+
+      <label for="size">Size:</label>
+      <select id="size">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option>
+      </select>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" value="1" min="1">
+
+      <button onclick="addToCart()">Add to Cart</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="categories.html">Categories</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">Login</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+      </div>
+      <p>&copy; 2025 PetzBasket. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Function to get query parameters from URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Set dynamic values
+    const name = getQueryParam("name");
+    const price = getQueryParam("price");
+    const image = getQueryParam("image");
+    const desc = getQueryParam("desc");
+
+    document.getElementById("product-name").textContent = name;
+    document.getElementById("product-price").textContent = "₹" + price;
+    document.getElementById("product-image").src = "images/" + image;
+    document.getElementById("product-desc").textContent = desc;
+
+    // Dummy addToCart function (you can enhance later)
+    function addToCart() {
+      alert(`${name} added to cart!`);
+    }
+  </script>
+
+<script>
+  function addToCart() {
+    const selectedSize = document.getElementById("size").value;
+    const quantity = parseInt(document.getElementById("quantity").value);
+
+    // Create a product object
+    const product = {
+      name,
+      price,
+      image,
+      desc,
+      size: selectedSize,
+      quantity
+    };
+
+    // Get existing cart items or initialize empty array
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Add new product
+    cart.push(product);
+
+    // Save to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`${name} added to cart successfully!`);
+  }
+</script>
+
+
+</body>
+</html>
+
