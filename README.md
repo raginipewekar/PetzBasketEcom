@@ -52,7 +52,7 @@ PetzBasketEcom/
 
 ---
 
-## 📌 Possible Enhancements
+## 📌 Future Prospects
 
 - Mobile responsiveness improvements  
 - Payment gateway simulation
