@@ -2,6 +2,7 @@
 
 - Welcome to **PetzBasket**, a user-friendly e-commerce web project dedicated to providing everything your furry friends need! From pet food to accessories, this site aims to deliver a seamless online shopping experience.
 - This website was built for a college project.
+- https://raginipewekar.github.io/PetzBasketEcom/
 ---
 
 ## 🌐 Live Preview
